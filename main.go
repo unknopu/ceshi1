@@ -2,6 +2,8 @@ package main
 
 import (
 	"ceshi1/account/handler"
+	"ceshi1/account/database"
+
 	"context"
 	"log"
 	"net/http"
@@ -16,11 +18,14 @@ import (
 func main(){
 	log.Println("Starting server...")
 
+	database.Init()
 	router := gin.Default()
 
 	handler.NewHandler(&handler.Config{
 		R: router,
 	})
+
+	// router.Run()
 
 	srv := &http.Server{
 		Addr:    ":8080",

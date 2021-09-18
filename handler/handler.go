@@ -11,6 +11,7 @@ import (
 // handler struct holds required services for handler to function
 type Handler struct {
 	UserService model.UserService
+	TokenService model.TokenService
 }
 
 // config will hold services that will eventually be injected into this
@@ -18,6 +19,7 @@ type Handler struct {
 type Config struct{
 	R *gin.Engine
 	UserService model.UserService
+	TokenService model.TokenService
 }
 
 // this is initializes the handler with required injected services along with http toutes
@@ -26,6 +28,7 @@ func NewHandler(c *Config){
 	// create ahandler which will later have injected services
 	h := &Handler{
 		UserService: c.UserService,
+		TokenService: c.TokenService,
 	}
 
 	// create an account group
