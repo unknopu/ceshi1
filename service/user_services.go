@@ -4,7 +4,6 @@ import (
 	"ceshi1/account/model"
 	"ceshi1/account/model/apperrors"
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/google/uuid"
@@ -38,17 +37,9 @@ func (s *UserService) Get(ctx context.Context, uid uuid.UUID) (*model.User, erro
 // signup reacher our to a UserRepository to verify that,
 // the email address is available and signs up the user if this is the case
 func (s *UserService) Signup(ctx context.Context, u *model.User) error {
-
 	pw, err := hashPassword(u.Password)
 	if err != nil {
 		log.Printf("Unable to signup user for email: %v\n", u.Email)
-
-		fmt.Println("=======================================")
-		fmt.Println("=======================================")
-		fmt.Println("here")
-		fmt.Println("=======================================")
-		fmt.Println("=======================================")
-		
 		return apperrors.NewInternal()
 	}
 
@@ -62,3 +53,4 @@ func (s *UserService) Signup(ctx context.Context, u *model.User) error {
 
 	return nil
 }
+
