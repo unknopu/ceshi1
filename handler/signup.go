@@ -5,7 +5,6 @@ import (
 	"ceshi1/account/model/apperrors"
 	"log"
 	"net/http"
-	_ "net/http"
 
 	"github.com/gin-gonic/gin"
 )

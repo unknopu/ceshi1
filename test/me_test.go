@@ -1,9 +1,10 @@
-package handler
+package test
 
 import (
 	"ceshi1/account/model"
 	"ceshi1/account/model/apperrors"
 	"ceshi1/account/model/mocks"
+	"ceshi1/account/handler"
 
 	"encoding/json"
 	"fmt"
@@ -48,7 +49,7 @@ func TestMe(t *testing.T) {
 			)
 		})
 
-		NewHandler(&Config{
+		handler.NewHandler(&handler.Config{
 			R:           router,
 			UserService: mockUserService,
 		})
@@ -77,7 +78,7 @@ func TestMe(t *testing.T) {
 
 		// do not append user to context
 		router := gin.Default()
-		NewHandler(&Config{
+		handler.NewHandler(&handler.Config{
 			R:           router,
 			UserService: mockUserService,
 		})
@@ -107,7 +108,7 @@ func TestMe(t *testing.T) {
 			)
 		})
 
-		NewHandler(&Config{
+		handler.NewHandler(&handler.Config{
 			R:           router,
 			UserService: mockUserService,
 		})

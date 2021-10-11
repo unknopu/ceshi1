@@ -1,9 +1,10 @@
-package service
+package test
 
 import (
 	"ceshi1/account/model"
 	"ceshi1/account/model/apperrors"
 	"ceshi1/account/model/mocks"
+	"ceshi1/account/service"
 	"context"
 	"fmt"
 	"testing"
@@ -24,7 +25,7 @@ func TestGet(t *testing.T){
 		}
 
 		mockUserRepository := new(mocks.MockUserRepository)
-		us := NewUserService(&USConfig{
+		us := service.NewUserService(&service.USConfig{
 			UserRepository: mockUserRepository,
 		})
 		mockUserRepository.On("FindByID", mock.Anything, uid).Return(mockUserResp, nil)
@@ -41,7 +42,7 @@ func TestGet(t *testing.T){
 		uid, _ := uuid.NewRandom()
 
 		mockUserRepository := new(mocks.MockUserRepository)
-		us := NewUserService(&USConfig{
+		us := service.NewUserService(&service.USConfig{
 			UserRepository: mockUserRepository,
 		})
 
@@ -56,7 +57,7 @@ func TestGet(t *testing.T){
 	})
 }
 
-func TestSignup(t *testing.T) {
+func TestUserSignup(t *testing.T) {
 
 	t.Run("Success", func(t *testing.T) {
 		uid, _ := uuid.NewRandom()
@@ -67,7 +68,7 @@ func TestSignup(t *testing.T) {
 		}
 
 		mockUserRepository := new(mocks.MockUserRepository)
-		us := NewUserService(&USConfig{
+		us := service.NewUserService(&service.USConfig{
 			UserRepository: mockUserRepository,
 		})
 
@@ -98,7 +99,7 @@ func TestSignup(t *testing.T) {
 		}
 
 		mockUserRepository := new(mocks.MockUserRepository)
-		us := NewUserService(&USConfig{
+		us := service.NewUserService(&service.USConfig{
 			UserRepository: mockUserRepository,
 		})
 

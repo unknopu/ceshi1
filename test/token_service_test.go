@@ -1,7 +1,9 @@
-package service
+package test
 
 import (
 	"ceshi1/account/model"
+	"ceshi1/account/service"
+
 	"context"
 	"fmt"
 	"io/ioutil"
@@ -20,7 +22,7 @@ func TestNewPairFromUser(t *testing.T) {
 	secret := "anotsorandomtestsecret"
 
 	// instantiate a common token service to be used by all tests
-	tokenService := NewTokenService(&TSConfig{
+	tokenService := service.NewTokenService(&service.TSConfig{
 		PrivKey:               privKey,
 		PubKey:                pubKey,
 		RefreshSecret:         secret,
@@ -45,7 +47,7 @@ func TestNewPairFromUser(t *testing.T) {
 
 		// decode the Base64URL encoded string
 		// simpler to use jwt library which is already imported
-		idTokenClaims := &IDTokenCustomClaims{}
+		idTokenClaims := &service.IDTokenCustomClaims{}
 		
 
 		_, err = jwt.ParseWithClaims(tokenPair.IDToken, idTokenClaims, func(token *jwt.Token) (interface{}, error) {
@@ -82,7 +84,7 @@ func TestNewPairFromUser(t *testing.T) {
 		expectedExpiresAt := time.Now().Add(15 * time.Minute)
 		assert.WithinDuration(t, expectedExpiresAt, expiresAt, 5*time.Second)
 
-		refreshTokenClaims := &refreshTokenCustomClaims{}
+		refreshTokenClaims := &service.RefreshTokenCustomClaims{}
 		_, err = jwt.ParseWithClaims(tokenPair.RefreshToken, refreshTokenClaims, func(token *jwt.Token) (interface{}, error) {
 			return []byte(secret), nil
 		})

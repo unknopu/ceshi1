@@ -1,8 +1,7 @@
 package main
 
 import (
-	"ceshi1/account/handler"
-	"ceshi1/account/database"
+	"ceshi1/account/service"
 
 	"context"
 	"log"
@@ -12,21 +11,20 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/gin-gonic/gin"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 func main(){
 	log.Println("Starting server...")
 
-	database.Init()
-	router := gin.Default()
-
-	handler.NewHandler(&handler.Config{
-		R: router,
-	})
-
-	// router.Run()
-
+	// initialize data
+	ds := initDS()
+	
+	router, err := service.Inject(ds)
+	if err != nil {
+		log.Fatal("Failure to inject data sources: %v\n", err)
+	}
 	srv := &http.Server{
 		Addr:    ":8080",
 		Handler: router,
@@ -55,13 +53,29 @@ func main(){
 	defer cancel()
 
 	// shutdown data sources
-	// if err := ds.close(); err != nil {
-	// 	log.Fatalf("A problem occurred gracefully shutting down data sources: %v\n", err)
-	// }
+	sqlDS, _ := ds.DB()
+	if err := sqlDS.Close(); err != nil {
+		log.Fatalf("A problem occurred gracefully shutting down data sources: %v\n", err)
+	}
 
 	// Shutdown server
 	log.Println("Shutting down server...")
 	if err := srv.Shutdown(ctx); err != nil {
 		log.Fatalf("Server forced to shutdown: %v\n", err)
 	}
+}
+
+func initDS() *gorm.DB {
+	conf := mysql.Config{
+		DSN : "root:root@(localhost:3307)/drink?charset=utf8mb4&parseTime=True&loc=Local",
+	}
+
+	conn, err := gorm.Open(mysql.New(conf), &gorm.Config{})
+	if err != nil {
+		// logx.Fatalf("cannot open mysql connection:%s", err)
+		log.Fatal("cannot open mysql connection:%s", err)
+	}
+	log.Println("Connected data source")
+
+	return conn
 }

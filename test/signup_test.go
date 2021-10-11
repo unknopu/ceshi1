@@ -1,10 +1,12 @@
-package handler
+package test
 
 import (
 	"bytes"
 	"ceshi1/account/model"
 	"ceshi1/account/model/apperrors"
 	"ceshi1/account/model/mocks"
+	"ceshi1/account/handler"
+
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -34,7 +36,7 @@ func TestSignup(t *testing.T) {
 		// we do not need a middleware as we dont yet have authorized user
 		router := gin.Default()
 
-		NewHandler(&Config{
+		handler.NewHandler(&handler.Config{
 			R:           router,
 			UserService: mockUserService,
 		})
@@ -73,7 +75,7 @@ func TestSignup(t *testing.T) {
 		// we do not need a middleware as we dont yet have authorized user
 		router := gin.Default()
 
-		NewHandler(&Config{
+		handler.NewHandler(&handler.Config{
 			R:           router,
 			UserService: mockUserService,
 		})
@@ -112,7 +114,7 @@ func TestSignup(t *testing.T) {
 		// we do not need a middleware as we dont yet have authorized user
 		router := gin.Default()
 
-		NewHandler(&Config{
+		handler.NewHandler(&handler.Config{
 			R:           router,
 			UserService: mockUserService,
 		})
@@ -156,7 +158,7 @@ func TestSignup(t *testing.T) {
 		// we do not need a middleware as we dont yet have authorized user
 		router := gin.Default()
 
-		NewHandler(&Config{
+		handler.NewHandler(&handler.Config{
 			R:           router,
 			UserService: mockUserService,
 		})
@@ -208,7 +210,7 @@ func TestSignup(t *testing.T) {
 		// we do not need a middleware as we do not yet have authorized user
 		router := gin.Default()
 
-		NewHandler(&Config{
+		handler.NewHandler(&handler.Config{
 			R:            router,
 			UserService:  mockUserService,
 			TokenService: mockTokenService,
@@ -267,7 +269,7 @@ func TestSignup(t *testing.T) {
 		// don't need a middleware as we don't yet have authorized user
 		router := gin.Default()
 
-		NewHandler(&Config{
+		handler.NewHandler(&handler.Config{
 			R:            router,
 			UserService:  mockUserService,
 			TokenService: mockTokenService,
